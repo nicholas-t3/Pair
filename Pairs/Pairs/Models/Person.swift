@@ -7,7 +7,21 @@
 
 import Foundation
 
-struct Person {
-    var name: String
+class Person: Codable {
+    let name: String
     var section: Int
+    let uuid: String
+    
+    init(name: String, section: Int = 0, uuid: String = UUID().uuidString) {
+        self.name = name
+        self.section = section
+        self.uuid = uuid
+    }
+    
+}
+
+extension Person: Equatable {
+    static func == (lhs: Person, rhs: Person) -> Bool {
+        lhs.uuid == rhs.uuid
+    }
 }

@@ -12,7 +12,7 @@ class Person: Codable {
     var section: Int
     let uuid: String
     
-    init(name: String, section: Int = 0, uuid: String = UUID().uuidString) {
+    init(name: String, section: Int = 1, uuid: String = UUID().uuidString) {
         self.name = name
         self.section = section
         self.uuid = uuid

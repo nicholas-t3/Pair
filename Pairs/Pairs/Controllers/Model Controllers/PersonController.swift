@@ -11,19 +11,19 @@ class PersonController {
     
     static let shared = PersonController()
     
-    var people: [Person]?
+    var people: [Person] = []
+    
     
     //MARK: CRUD Methods
-    
     func add(_ name: String) {
-        people?.append((Person(name: name)))
+        people.append((Person(name: name)))
         print("Successfully added \(name) to the array")
         saveToPersistence()
     }
     
     func delete(_ person: Person) {
-        guard let index = people?.firstIndex(of: person) else {return}
-        people?.remove(at: index)
+        guard let index = people.firstIndex(of: person) else {return}
+        people.remove(at: index)
         saveToPersistence()
     }
     

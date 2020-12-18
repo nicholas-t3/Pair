@@ -9,10 +9,9 @@ import Foundation
 
 class PersonController {
     
+    // MARK: - Properties
     static let shared = PersonController()
-    
     var people: [Person] = []
-    
     
     //MARK: CRUD Methods
     func add(_ name: String) {

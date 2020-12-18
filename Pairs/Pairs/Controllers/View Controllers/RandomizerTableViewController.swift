@@ -9,14 +9,13 @@ import UIKit
 
 class RandomizerTableViewController: UITableViewController {
     
+    // MARK: - Properties
     var groupOnePeople: [Person] = []
     var groupTwoPeople: [Person] = []
     var groupThreePeople: [Person] = []
     var groupFourPeople: [Person] = []
     var data = [[Person]]()
     let headerTitles = ["Group 1", "Group 2", "Group 3", "Group 4"]
-    
-    
     
     // MARK: - Lifecycle Methods
     override func viewDidLoad() {
@@ -25,7 +24,17 @@ class RandomizerTableViewController: UITableViewController {
         loadPeople()
     }
     
+    // MARK: - Actions
+    @IBAction func randomButtonTapped(_ sender: Any) {
+        randomizePeople()
+        loadPeople()
+    }
     
+    @IBAction func addButtonTapped(_ sender: Any) {
+        addPersonAlert()
+    }
+    
+    //MARK: - Methods
     func randomizePeople(){
         for person in PersonController.shared.people {
             let number = Int.random(in: 1...4)
@@ -63,23 +72,10 @@ class RandomizerTableViewController: UITableViewController {
         data.append(groupTwoPeople)
         data.append(groupThreePeople)
         data.append(groupFourPeople)
-        self.tableView.reloadData()
-    }
-    
-    // MARK: - Actions
-    @IBAction func randomButtonTapped(_ sender: Any) {
-        randomizePeople()
-        loadPeople()
         tableView.reloadData()
-        
     }
     
-    @IBAction func addButtonTapped(_ sender: Any) {
-        addPersonAlert()
-        
-    }
-    
-    //MARK: - Methods
+
     func addPersonAlert(){
         let alertController = UIAlertController(title: "Add Person", message: "Add someone new to the list" , preferredStyle: .alert)
         
@@ -126,18 +122,14 @@ class RandomizerTableViewController: UITableViewController {
         return cell
     }
     
-    
-    
-    
-    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            let person = data[indexPath.section][indexPath.row]
+            PersonController.shared.delete(person)
+            let index = indexPath.row
+            data[indexPath.section].remove(at: index)
+            loadPeople()
         }
     }
-    
-    
-    
     
 } //End of class
